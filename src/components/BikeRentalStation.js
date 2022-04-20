@@ -7,6 +7,7 @@ const BikeRentalStation = ({station}) => {
   const [spacesAvailable, setSpacesAvailable] = useState(0);
 
   const [showDetailedInfo, setShowDetailedInfo] = useState(false);
+  const [infoIsFetched, setInfoIsFetched] = useState(false);
 
   useEffect(() => {
     if (showDetailedInfo === true) {
@@ -33,6 +34,7 @@ const BikeRentalStation = ({station}) => {
         hslheaders
       );
       res.then(response => {
+        setInfoIsFetched(true);
         setBikesAvailable(response.data.data.bikeRentalStation.bikesAvailable);
         setSpacesAvailable(response.data.data.bikeRentalStation.spacesAvailable)
       })
@@ -54,7 +56,7 @@ const BikeRentalStation = ({station}) => {
         </button>
       </div>
 
-      {showDetailedInfo && (
+      {showDetailedInfo && infoIsFetched && (
         <div className="flex gap-x-4">
           <div>Bikes available: {bikesAvailable}</div>
           <div>Spaces available: {spacesAvailable}</div>
